@@ -134,8 +134,8 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe = 'npm run lint --'
 
-nnoremap <C-w><d> :SyntasticToggleMode<CR>
-nnoremap <C-w><e> :SyntasticCheck<CR>
+nnoremap <C-w>d :SyntasticToggleMode<CR>
+nnoremap <C-w>e :SyntasticCheck<CR>
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 function! s:isAtStartOfLine(mapping)
