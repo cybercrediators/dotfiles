@@ -1,8 +1,5 @@
-syntax on
-
 set nocompatible
 set smartindent
-set shiftwidth=4
 set backspace=indent,eol,start
 set ruler
 set number
@@ -15,12 +12,10 @@ set shiftwidth=2
 
 set mouse=a
 
-filetype off 
+filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
-
-
 
 "-------------- PLUGINS STARTS -----------------
 call vundle#begin()
@@ -46,8 +41,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
-
-"for ruby and rails
+Plugin 'rhysd/vim-crystal'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-endwise'
 Plugin 'thoughtbot/vim-rspec'
@@ -55,15 +49,21 @@ Plugin 'slim-template/vim-slim'
 Plugin 'tpope/vim-bundler'
 Plugin 'rip-rip/clang_complete'
 Plugin 'rust-lang/rust.vim'
-Plugin 'vim-syntastic/syntastic'
+"Plugin 'vim-syntastic/syntastic'
+Plugin 'dense-analysis/ale'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'lervag/vimtex'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'burnettk/vim-angular'
 
 call vundle#end()  
 "-------------- PLUGINS END --------------------
 filetype plugin indent on
+syntax on
 
-
+nnoremap <C-w>t :TableModeToggle<CR>
 
 "----- GENERAL SETTINGS-------
 set laststatus=2
@@ -78,18 +78,37 @@ colorscheme solarized
 
 "---------NERD-TREE SETTINGS----------
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
-let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_open_on_console_startup = 0
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
-"-------- SYNTASTIC SETTINGS---------
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = "▲"
+"-------- ALE SETTINGS -----------
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_text_changed = 'never'
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nnoremap <C-w>e :ALEToggle<CR>
+nnoremap <C-w>d :ALEFindReferences<CR>
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = "▲"
+let g:airline#extensions#ale#enabled = 1
+let g:ale_set_highlights = 1
+highlight ALEWarning ctermbg=DarkMagenta
 
-augroup mySyntastic
-    au!
-    au FileType tex let b:syntastic_mode = "passive"
-augroup END
+"-------- SYNTASTIC SETTINGS---------
+"augroup mySyntastic
+"    au!
+"    au FileType tex let b:syntastic_mode = "passive"
+"augroup END
+"
+let g:tex_flavor='latex'
+let g:vimtex_view_general_viewer = 'evince'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
+
+"-------------- SyntasticToggles --------------------
+"nnoremap <C-w>d :ALEToggle<CR>
 
 
 "-------- TAGS SETTINGS --------------------------------
@@ -127,15 +146,13 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe = 'npm run lint --'
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exe = 'npm run lint --'
 
-nnoremap <C-w>d :SyntasticToggleMode<CR>
-nnoremap <C-w>e :SyntasticCheck<CR>
 let g:ycm_server_keep_logfiles = 1
 let g:ycm_server_log_level = 'debug'
 function! s:isAtStartOfLine(mapping)
@@ -151,3 +168,6 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+
+"let vim_markdown_preview_toggle=2
+"let vim_markdown_preview_browser='firefox'
