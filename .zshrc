@@ -55,6 +55,12 @@ export NVM_LAZY_LOAD=true
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
+# SSH-AGENT settings
+
+zstyle :omz:plugins:ssh-agent identities id_rsa
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent lifetime 4h
+
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -70,6 +76,8 @@ plugins=(
          zsh-completions
          k
          zsh-nvm
+		 ssh-agent
+		 bundler
         )
 
 source $ZSH/oh-my-zsh.sh
