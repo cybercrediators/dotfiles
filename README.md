@@ -17,3 +17,4 @@
 
 + set the default shell to zsh: ```chsh -s /bin/zsh``` 
 + logout and login to see changes
++ no symbol fix: install the `fonts-powerline` and `dejavu` fonts
