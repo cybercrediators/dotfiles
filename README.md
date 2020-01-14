@@ -18,3 +18,4 @@
 + set the default shell to zsh: ```chsh -s /bin/zsh``` 
 + logout and login to see changes
 + no symbol fix: install the `fonts-powerline` and `dejavu` fonts
++ fix empty bottom line in termite: adjust the `height` in the polybar config and add `padding: 0px;` to the `~/.config/gtk-3.0/gtk.css` check at which combination the line is invisible
