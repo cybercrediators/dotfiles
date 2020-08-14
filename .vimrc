@@ -1,3 +1,4 @@
+
 set nocompatible
 set smartindent
 set backspace=indent,eol,start
@@ -21,6 +22,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'altercation/vim-colors-solarized'
@@ -51,12 +53,14 @@ Plugin 'rip-rip/clang_complete'
 Plugin 'rust-lang/rust.vim'
 "Plugin 'vim-syntastic/syntastic'
 Plugin 'dense-analysis/ale'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'dhruvasagar/vim-table-mode'
 Plugin 'leafgarland/typescript-vim'
 Plugin 'lervag/vimtex'
 Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'burnettk/vim-angular'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'mileszs/ack.vim'
 
 call vundle#end()  
 "-------------- PLUGINS END --------------------
@@ -67,7 +71,6 @@ nnoremap <C-w>t :TableModeToggle<CR>
 
 "----- GENERAL SETTINGS-------
 set laststatus=2
-let g:airline_powerline_fonts = 1
 let g:airline_detect_paste=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='solarized'
@@ -107,6 +110,11 @@ let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='abdmg'
 
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+nnoremap <Leader>a :Ack!<Space>
+
 "-------------- SyntasticToggles --------------------
 "nnoremap <C-w>d :ALEToggle<CR>
 
@@ -136,6 +144,11 @@ augroup mydelimitMate
     au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
     au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
 augroup END
+
+"-----------FZF Settings---------------
+let g:fzf_command_prefix = 'Fzf'
+nnoremap <silent> <leader>o :FzfFiles<CR>
+nnoremap <silent> <leader>O :FzfFiles!<CR>
 
 "-----------TMUX SETTINGS--------------
 let g:tmux_navigator_save_on_switch = 2
@@ -171,3 +184,4 @@ inoreabbrev <expr> __
 
 "let vim_markdown_preview_toggle=2
 "let vim_markdown_preview_browser='firefox'
+let g:airline_powerline_fonts = 1

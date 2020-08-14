@@ -55,12 +55,6 @@ export NVM_LAZY_LOAD=true
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# SSH-AGENT settings
-
-zstyle :omz:plugins:ssh-agent identities id_rsa
-zstyle :omz:plugins:ssh-agent agent-forwarding on
-zstyle :omz:plugins:ssh-agent lifetime 4h
-
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -76,9 +70,13 @@ plugins=(
          zsh-completions
          k
          zsh-nvm
-		 ssh-agent
-		 bundler
+         ssh-agent
+         crystal
         )
+
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities id_rsa github
+zstyle :omz:plugins:ssh-agent lifetime 4h
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,3 +111,6 @@ alias be="bundle exec"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPS="--extended"
