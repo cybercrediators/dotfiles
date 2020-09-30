@@ -1,5 +1,6 @@
 # dotfiles
 
+## Installation
 + First make sure following packages are installed:
   + zsh
   + vim
@@ -14,7 +15,10 @@
   + Zsh: 
     + syntax highlighting: ```git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting```
     + auto suggestions: ```git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions```
++ Spotify polybar status:
+  + Check out the [polybar-status](https://github.com/Jvanrhijn/polybar-spotify)
 
+## Troubleshooting
 + set the default shell to zsh: ```chsh -s /bin/zsh``` 
 + logout and login to see changes
 + no symbol fix: install the `fonts-powerline` and `dejavu` fonts
