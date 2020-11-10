@@ -96,6 +96,8 @@ source $ZSH/oh-my-zsh.sh
 alias ssh="TERM=xterm ssh"
 alias be="bundle exec"
 
+alias gfc='git commit -m "WIP: $(fortune)"'
+alias gfp='git commit -am "WIP: $(fortune)" && git push'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
