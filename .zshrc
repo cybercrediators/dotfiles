@@ -98,6 +98,7 @@ alias be="bundle exec"
 
 alias gfc='git commit -m "WIP: $(fortune)"'
 alias gfp='git commit -am "WIP: $(fortune)" && git push'
+alias ytdl='youtube-dl -f 22'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
