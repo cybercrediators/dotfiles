@@ -6,7 +6,7 @@
   + vim
   + tmux
   + i3
-  + termite
+  + rxvt-unicode
 + Install Plugin Managers
   + Vim-Plug: should download and install itselft automatically when starting vim
   + Oh-my-zsh: ```sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"```
@@ -26,3 +26,9 @@
 + For the old youcompleteme: check `vim --version` if you compiled vim with python or not (needs python3!)
 + To use the system-wide clipboard you have to compile your vim with `clipboard` and `xterm_clipboard` (`vim --version | grep clipboard`)
   + easy fix: install gvim, which is (usually) compiled with it out of the box and contains an alias for the 'normal `vim`'
++ no symbols in urxvt:
+  + the font is loaded from `~/.fonts`, but the standard installation will not link it
+  + clone the powerline fonts: `https://github.com/powerline/fonts`
+  + `./install.sh`
+  + `ln -s ~/.local/share/fonts ~/.fonts`
+  + `xrdb ~/.Xdefaults`

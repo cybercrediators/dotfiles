@@ -1,3 +1,4 @@
+
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.rgba:      	rgb
@@ -21,7 +22,7 @@ Xft.hintstyle:  hintslight
 *color14:        rgb:a1/cd/cd
 *color7:         rgb:ff/ff/ff
 *color15:        rgb:dd/dd/dd
- 
+
 URxvt.inheritPixmap: true
 URxvt.transparent: true
 URxvt.tintColor: #000
@@ -31,30 +32,32 @@ URxvt.cursorColor:red3
 URxvt.scrollBar:False
 URxvt.saveLines:3000
 URxvt.preeditType:Root
-URxvt.urlLauncher: firefox 
-URxvt.matcher.button: 1
+URxvt.urlLauncher: firefox
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+URxvt.keysym.Control-Meta-c: builtin-string:
+URxvt.keysym.Control-Meta-v: builtin-string:
 
-URxvt*termName:                 rxvt-256color
+URxvt*termName:                 rxvt-unicode-256color
 URxvt.depth:                    32
 URxvt*lineSpace:                1
-URxvt.letterSpace:              -1
+URxvt.letterSpace:              0
 URxvt.iso14755:                 false
 URxvt.iso14755_52:              false
 URxvt*loginShell:               true
-URxvt.internalBorder:           25
-URxvt.perl-ext:	 		default,matcher
+URxvt.internalBorder:           0
+URxvt.perl-ext:	 		default,matcher,resize-font
 URxvt.matcher.button: 1
-URxvt.perl-ext-common: matcher
-URxvt*font:xft:YaHei Consolas Hybrid:pixelsize=14:antialias=true,xft:Droid Sans Fallback:pixelsize=12:antialias=true
+URxvt.perl-ext-common: matcher,tabbed
+!URxvt*font:xft:YaHei Consolas Hybrid:pixelsize=14:antialias=true,xft:Droid Sans Fallback:pixelsize=12:antialias=true
 !URxvt.font:xft:Bitstream Vera Sans Mono:pixelsize=13:antialias=true,xft:Droid Sans Fallback:pixelsize=12:antialias=true
-!URxvt.font:xft:DejaVu Sans Mono:pixelsize=13:antialias=true,xft:Droid Sans Fallback:pixelsize=12:antialias=true
+URxvt.font:xft:DejaVu\ Sans\ Mono\ for Powerline:pixelsize=13:antialias=true,xft:Droid Sans Fallback:pixelsize=12:antialias=true
 !URxvt.font:xft:Monaco:pixelsize=13:antialias=true,xft:WenQuanYi Micro Hei Mono:pixelsize=13:antialias=true
 !URxvt.font:xft:ProFont:pixelsize=13:antialias=true,xft:WenQuanYi ZenHei:pixelsize=15:antialias=true
 ! bold font
-URxvt*boldFont:xft:YaHei Consolas Hybrid:pixelsize=14:Bold:antialias=true,xft:Droid Sans Fallback:pixelsize=12:Bold:antialias=true
+!URxvt*boldFont:xft:YaHei Consolas Hybrid:pixelsize=14:Bold:antialias=true,xft:Droid Sans Fallback:pixelsize=12:Bold:antialias=true
 !URxvt.boldFont:xft:Bitstream Vera Sans Mono:pixelsize=13:Bold:antialias=true,xft:Droid Sans Fallback:pixelsize=12:Bold:antialias=true
-!URxvt.boldFont:xft:DejaVu Sans Mono:pixelsize=13:Bold:antialias=true,xft:Droid Sans Fallback:pixelsize=12:Bold:antialias=true
+URxvt.boldFont:xft:DejaVu\ Sans\ Mono\ for Powerline:pixelsize=13:Bold:antialias=true,xft:Droid Sans Fallback:pixelsize=12:Bold:antialias=true
 !URxvt.boldFont:xft:Monaco:pixelsize=13:Bold:antialias=true,xft:WenQuanYi Micro Hei Mono:pixelsize=13:Bold:antialias=true
 !URxvt.boldFont:xft:ProFont:pixelsize=13:antialias=true,xft:WenQuanYi ZenHei:pixelsize=15:antialias=true
 !
-
