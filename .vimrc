@@ -219,7 +219,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " close help floating window
-nmap <silent> <c-[> <esc>:noh<cr><Plug>(coc-float-hide)
+"nmap <silent> <c-[> <esc>:noh<cr><Plug>(coc-float-hide)
 
 "---------NERD-TREE SETTINGS----------
 nmap <silent> <leader>t :NERDTreeTabsToggle<CR>

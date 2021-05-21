@@ -2,11 +2,12 @@
 set $mod Mod4
 set $alt Mod1
 # Set display resolution
-exec_always --no-startup-id xrandr --output eDP1 --mode 1920x1080 --rate 59.95
 exec --no-startup-id betterlockscreen -w
+exec_always --no-startup-id nm-applet
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec setxkbmap -layout us -variant altgr-intl
 
-font pango:Overpass Regular 8
-exec "setxkbmap -layout de -variant nodeadkeys"
+#font pango:Overpass Regular 8
 exec "synclient TapButton1=1 TabButton2=3 TabButton3=2"
 exec "~/.fehbg &"
 
@@ -14,7 +15,7 @@ exec "~/.fehbg &"
 floating_modifier $mod
 
 # Open new terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec alacritty
 
 #Close window
 bindsym $mod+Shift+q kill
@@ -199,7 +200,7 @@ bindsym XF86AudioPrev exec playerctl previous
 
 
 
-set $Locker betterlockscreen -l blur && sleep 1
+set $Locker betterlockscreen -l blur && sleep 0.5
 
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
