@@ -32,12 +32,12 @@ Plug 'junegunn/vim-plug'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-easytags'
 Plug 'majutsushi/tagbar'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/a.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -64,13 +64,14 @@ Plug 'dense-analysis/ale'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'leafgarland/typescript-vim'
 Plug 'lervag/vimtex'
-Plug 'JamshedVesuna/vim-markdown-preview'
+"Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'burnettk/vim-angular'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'mileszs/ack.vim'
 
-call plug#end()  
+call plug#end()
 "-------------- PLUGINS END --------------------
 filetype plugin indent on
 syntax on
@@ -259,7 +260,7 @@ nnoremap <Leader>a :Ack!<Space>
 
 "-------------- SyntasticToggles --------------------
 "nnoremap <C-w>d :ALEToggle<CR>
-
+"
 
 "-------- TAGS SETTINGS --------------------------------
 let g:easytags_events = ['BufReadPost', 'BufWritePost']
@@ -327,3 +328,6 @@ inoreabbrev <expr> __
 "let vim_markdown_preview_toggle=2
 "let vim_markdown_preview_browser='firefox'
 let g:airline_powerline_fonts = 1
+nmap <C-P> :FZF<CR>
+nmap <F8> :TagbarToggle<CR>
+nmap <C-m> <Plug>MarkdownPreviewToggle

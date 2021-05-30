@@ -2,6 +2,7 @@
 env:
   TERM: xterm-256color
   vblank_mode: "1"
+  WINIT_X11_SCALE_FACTOR: "1.0"
 
 colors:
    # Default colors
@@ -39,4 +40,4 @@ colors:
     white:   '#ffffff'
 
 font:
-  size: 6
+  size: 10

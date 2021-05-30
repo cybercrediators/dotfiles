@@ -5,9 +5,10 @@ set $alt Mod1
 exec --no-startup-id betterlockscreen -w
 exec_always --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id /usr/bin/blueman-applet
 exec setxkbmap -layout us -variant altgr-intl
 
-#font pango:Overpass Regular 8
+font pango:Overpass Regular 8
 exec "synclient TapButton1=1 TabButton2=3 TabButton3=2"
 exec "~/.fehbg &"
 
@@ -22,7 +23,7 @@ bindsym $mod+Shift+q kill
 bindsym $alt+F4      kill
 
 # Open dmenu 
-bindsym $mod+d exec dmenu_run -fn 'Overpass Mono:pixelsize=15' -l 3 -nf '#707880' -sf '#cc6666' -nb '#1d1f21' -sb '#1d1f21'
+bindsym $mod+d exec dmenu_run -fn 'Overpass Mono:pixelsize=15' -l 5 -nf '#707880' -sf '#cc6666' -nb '#1d1f21' -sb '#1d1f21'
 
 # Change focus
 bindsym $mod+h focus left
