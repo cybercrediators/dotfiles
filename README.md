@@ -7,14 +7,32 @@
   + tmux
   + i3
   + alacritty
+  + neovim (nightly/0.5)
 + Install Plugin Managers
-  + Vim-Plug: should download and install itselft automatically when starting vim
-  + Oh-my-zsh: ```sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"```
+  + Vim-Plug: should download and install itself automatically when starting vim
+  + Oh-my-zsh: `sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"` / Use `./install_req.sh`
 + Install the Plugins:
   + Vim: `:PlugInstall` for Vim Plug(should start automatically)
-  + Zsh:
-    + syntax highlighting: ```git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting```
-    + auto suggestions: ```git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions```
+  + use `./install_req.sh` to install the language servers/zsh plugins
+  + Install the following treesitter plugins (`:TSInstall`): / Use `./install_req.sh`
+    + bash
+    + bibtex
+    + c
+    + cpp
+    + css
+    + dockerfile
+    + go
+    + html
+    + java
+    + json
+    + lua
+    + python
+    + regex
+    + ruby
+    + rust
+    + scss
+    + toml
+    + yaml
 + Spotify polybar status:
   + Check out the [polybar-status](https://github.com/Jvanrhijn/polybar-spotify)
 
