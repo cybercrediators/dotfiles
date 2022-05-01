@@ -63,12 +63,12 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
   Plug 'norcalli/snippets.nvim'
   Plug 'hrsh7th/vim-vsnip'
   Plug 'hrsh7th/vim-vsnip-integ'
-
 
 call plug#end()
 
@@ -94,7 +94,7 @@ let g:airline#extensions#ale#enabled = 1
 set statusline+=%#warningmsg#
 set statusline+=%*
 
-"" Nerdtree settings
+" Nerdtree settings
 nnoremap <C-g> :NERDTreeToggle<CR>
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
@@ -193,12 +193,7 @@ set encoding=utf-8 nobomb
 " markdown preview
 nmap <C-m> <Plug>MarkdownPreviewToggle
 
-" Telescope
-
-" LSP settings
-autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
-autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
-autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
+"" Telescope
 
 lua << EOF
   local nvim_lsp = require('lspconfig')
@@ -206,6 +201,7 @@ lua << EOF
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
   local on_attach = function(client, bufnr)
+    print("LSP started")
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
   
@@ -237,7 +233,7 @@ lua << EOF
   
   -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
-  local servers = { "pyright", "tsserver", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "html", "java_language_server", "jsonls", "scry", "texlab", "gopls", "yamlls" }
+  local servers = { "pylsp", "tsserver", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "html", "java_language_server", "jsonls", "scry", "texlab", "gopls", "yamlls" }
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup { on_attach = on_attach }
   end
@@ -307,11 +303,9 @@ require'compe'.setup {
     calc = true;
     nvim_lsp = true;
     nvim_lua = true;
-    vsnip = true;
-    snippets_nvim = true;
-    ultisnips = true;
     spell = true;
     treesitter = true;
+    ultisnips = true;
   };
 }
 
@@ -329,8 +323,8 @@ local check_back_space = function()
 end
 
 -- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
+-- move to prev/next item in completion menuone
+-- jump to prev/next snippet's placeholder
 _G.tab_complete = function()
   if vim.fn.pumvisible() == 1 then
     return t "<C-n>"
@@ -360,6 +354,30 @@ vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 EOF
 
 " Telescope settings
+lua << EOF
+require('telescope').setup {
+  defaults = {
+    file_ignore_patterns = {
+      "node_modules/.*",
+      "blackbox",
+      ".git/.*"
+    }
+  },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = false, -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+}
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
+EOF
+
 "nnoremap <C-p> <cmd>Telescope find_files<cr>
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
@@ -374,11 +392,6 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true
   },
-}
-require'nvim-treesitter.configs'.setup {
-  indent = {
-    enable = true
-  }
 }
 require'nvim-treesitter.configs'.setup {
   incremental_selection = {

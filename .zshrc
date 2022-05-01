@@ -8,7 +8,12 @@
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="agnoster"
+#ZSH_THEME="agnoster"
+if [[ -n $SSH_CONNECTION ]]; then
+  ZSH_THEME="robbyrussell"
+else
+  ZSH_THEME="agnoster"
+fi
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -96,9 +101,17 @@ source $ZSH/oh-my-zsh.sh
 alias ssh="TERM=xterm ssh"
 alias be="bundle exec"
 
+alias ls='lsd'
 alias gfc='git commit -m "WIP: $(fortune)"'
 alias gfp='git commit -am "WIP: $(fortune)" && git push'
 alias ytdl='youtube-dl -f 22'
+alias ll='ls -Alh'
+alias ytmp3='youtube-dl --extract-audio --audio-format mp3'
+alias mastud='cd ~/Desktop/master_studium/SS_21'
+
+# remove this to use vim again!
+#alias vim='nvim'
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -115,5 +128,10 @@ alias ytdl='youtube-dl -f 22'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPS="--extended"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+eval "$(rbenv init -)"
+. /opt/asdf-vm/asdf.sh

@@ -82,8 +82,8 @@ tray-maxsize = 16
 ;click-right =
 ;scroll-up = bspwm-deskprev
 ;scroll-down = bspwm-desknext
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+scroll-up = #i3.next
+scroll-down = #i3.prev
 ;double-click-left = notify-send -u low doubleclick
 ;double-click-right = notify-send -u low doubleclick2
 
@@ -193,6 +193,12 @@ ramp-signal-2 = .||
 ramp-signal-3 = .|||
 ramp-signal-4 = .||||
 ramp-signal-foreground = #666
+#ramp-signal-0 = 😱
+#ramp-signal-1 = 😠
+#ramp-signal-2 = 😒
+#ramp-signal-3 = 😊
+#ramp-signal-4 = 😃
+#ramp-signal-5 = 😈
 
 [module/wired]
 type = internal/network
@@ -254,6 +260,8 @@ ramp-volume-0 = |
 ramp-volume-1 = ||
 ramp-volume-2 = |||
 ramp-volume-foreground = #666
+
+click-right = pavucontrol
 
 ramp-headphones-0 = |
 ramp-headphones-1 = ||
