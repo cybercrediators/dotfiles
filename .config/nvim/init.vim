@@ -14,6 +14,7 @@ set softtabstop=2
 set shiftwidth=2
 
 set mouse=a
+set clipboard+=unnamedplus
 
 " Plugins
 "
@@ -59,16 +60,25 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/playground'
   Plug 'neovim/nvim-lspconfig'
-  Plug 'hrsh7th/nvim-compe'
+  "Plug 'hrsh7th/nvim-compe'
+  Plug 'hrsh7th/nvim-cmp'
+  Plug 'hrsh7th/cmp-nvim-lsp'
+  Plug 'hrsh7th/cmp-nvim-lua'
+  Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+  Plug 'hrsh7th/cmp-vsnip'                             
+  Plug 'hrsh7th/cmp-path'                              
+  Plug 'hrsh7th/cmp-buffer'                            
+  Plug 'hrsh7th/vim-vsnip'                             
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'SirVer/ultisnips'
+  Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   Plug 'honza/vim-snippets'
-  Plug 'norcalli/snippets.nvim'
-  Plug 'hrsh7th/vim-vsnip'
+  "Plug 'norcalli/snippets.nvim'
   Plug 'hrsh7th/vim-vsnip-integ'
+  Plug 'puremourning/vimspector'
 
 call plug#end()
 
@@ -233,7 +243,7 @@ lua << EOF
   
   -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
-  local servers = { "pylsp", "tsserver", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "html", "java_language_server", "jsonls", "scry", "texlab", "gopls", "yamlls" }
+  local servers = { "pylsp", "tsserver", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "html", "java_language_server", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman" }
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup { on_attach = on_attach }
   end
@@ -271,86 +281,150 @@ lua << EOF
           }
       }
   }
-
-  require'lspconfig'.zeta_note.setup {
-    cmd = { '~/lang-server/zeta-note-linux' },
-    filetypes = { "markdown", "md" },
-  }
 EOF
 
 " Autocompletion settings
 lua << EOF
 -- Compe Setup --
-vim.o.completeopt = "menuone,noselect"
+vim.o.completeopt = "menu,menuone,noselect"
+local cmp = require'cmp'
 
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' }, -- For vsnip users.
+    { name = 'ultisnips' }, -- For vsnip users.
+    { name = 'buffer' }, -- For vsnip users.
+    { name = 'path' }, -- For vsnip users.
+    { name = 'calc' }, -- For vsnip users.
+    { name = 'spell' }, -- For vsnip users.
+    { name = 'treesitter' }, -- For vsnip users.
+    { name = 'nvim_lua' }, -- For vsnip users.
+    { name = 'buffer' },
+  })
+})
 
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = true;
-    treesitter = true;
-    ultisnips = true;
-  };
-}
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
 
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
-    end
-end
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
 
+  -- Set up lspconfig.
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+  --   capabilities = capabilities
+  -- }
+
+--require'compe'.setup {
+--  enabled = true;
+--  autocomplete = true;
+--  debug = false;
+--  min_length = 1;
+--  preselect = 'enable';
+--  throttle_time = 80;
+--  source_timeout = 200;
+--  incomplete_delay = 400;
+--  max_abbr_width = 100;
+--  max_kind_width = 100;
+--  max_menu_width = 100;
+--  documentation = true;
+--
+--  source = {
+--    path = true;
+--    buffer = true;
+--    calc = true;
+--    nvim_lsp = true;
+--    nvim_lua = true;
+--    spell = true;
+--    treesitter = true;
+--    ultisnips = true;
+--  };
+--}
+--
+-- local t = function(str)
+--   return vim.api.nvim_replace_termcodes(str, true, true, true)
+-- end
+-- 
+-- local check_back_space = function()
+--     local col = vim.fn.col('.') - 1
+--     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+--         return true
+--     else
+--         return false
+--     end
+-- end
+--
 -- Use (s-)tab to:
 -- move to prev/next item in completion menuone
 -- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    return t "<S-Tab>"
-  end
-end
-
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- _G.tab_complete = function()
+--   if vim.fn.pumvisible() == 1 then
+--     return t "<C-n>"
+--   elseif vim.fn.call("vsnip#available", {1}) == 1 then
+--     return t "<Plug>(vsnip-expand-or-jump)"
+--   elseif check_back_space() then
+--     return t "<Tab>"
+--   else
+--     -- return vim.fn['cmp#complete']()
+--     return cmp.complete()
+--   end
+-- end
+-- _G.s_tab_complete = function()
+--   if vim.fn.pumvisible() == 1 then
+--     return t "<C-p>"
+--   elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
+--     return t "<Plug>(vsnip-jump-prev)"
+--   else
+--     -- If <S-Tab> is not working in your terminal, change it to <C-h>
+--     return t "<S-Tab>"
+--   end
+-- end
+-- 
+-- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 EOF
 
 " Telescope settings
@@ -405,3 +479,7 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+
+" Vimspector
+
