@@ -54,4 +54,7 @@ npm i -g vim-language-server
 # yaml
 npm i -g yaml-language-server
 
+# vscode langservers
+yay -S vscode-langservers-extracted
+
 nvim -c "TSInstall bash bibtex c cpp css dockerfile go html java json lua python regex ruby rust scss toml yaml"

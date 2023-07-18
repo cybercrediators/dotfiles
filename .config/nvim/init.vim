@@ -80,6 +80,8 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'hrsh7th/vim-vsnip-integ'
   Plug 'puremourning/vimspector'
 
+  Plug 'epwalsh/obsidian.nvim'
+
 call plug#end()
 
 " Apply the colorscheme
@@ -128,6 +130,9 @@ inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>
 nnoremap <C-Delete> :tabclose<CR>
+
+" Close buffer
+nnoremap <leader>q :bdelete<CR>
 
 " Git settings
 hi clear SignColumn
@@ -243,10 +248,14 @@ lua << EOF
   
   -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
-  local servers = { "pylsp", "tsserver", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "html", "java_language_server", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman" }
+  local servers = { "pylsp", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman", "cssls"}
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup { on_attach = on_attach }
   end
+
+  require'lspconfig'.java_language_server.setup {
+    cmd = { "java-language-server" }
+  }
 
   require'lspconfig'.vimls.setup {
     filetypes = { "vim" }
@@ -281,11 +290,26 @@ lua << EOF
           }
       }
   }
+
+  require'obsidian'.setup {
+    dir = "~/Documents/smallbrain",
+    daily_notes = {
+      folder = "Daily/",
+      date_format = "%Y-%m-%d"
+    },
+
+    completion = {
+      nvim_cmp = true,
+      min_chars = 2,
+      new_notes_location = "current_dir"
+    },
+    finder = "telescope.nvim",
+  }
+
 EOF
 
-" Autocompletion settings
 lua << EOF
--- Compe Setup --
+-- Comp Setup --
 vim.o.completeopt = "menu,menuone,noselect"
 local cmp = require'cmp'
 
@@ -298,8 +322,8 @@ cmp.setup({
     end,
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -318,7 +342,6 @@ cmp.setup({
     { name = 'spell' }, -- For vsnip users.
     { name = 'treesitter' }, -- For vsnip users.
     { name = 'nvim_lua' }, -- For vsnip users.
-    { name = 'buffer' },
   })
 })
 
@@ -341,7 +364,7 @@ cmp.setup({
 
   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
   cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
+    -- mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
@@ -463,11 +486,6 @@ nnoremap <leader>ft <cmd>Telescope treesitter<cr>
 " Treesitter settings
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true
-  },
-}
-require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
     keymaps = {
@@ -477,9 +495,10 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "grm",
     },
   },
+  ensure_installed = { "markdown", "markdown_inline", ... },
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = { "markdown" },
+  },
 }
 EOF
-
-
-" Vimspector
-
