@@ -6,7 +6,7 @@ exec --no-startup-id betterlockscreen -w
 exec_always --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id /usr/bin/blueman-applet
-exec setxkbmap -layout us -variant altgr-intl
+exec --no-startup-id setxkbmap -layout us -variant altgr-intl
 
 font pango:Overpass Regular 8
 exec "synclient TapButton1=1 TabButton2=3 TabButton3=2"
@@ -183,7 +183,7 @@ exec_always --no-startup-id wal -R -n
 
 # Apply a background different than the one used by wal
 # If this isn't needed, remove it and remove -n flag from the above command
-exec_always --no-startup-id feh --bg-fill ~/Pictures/Wal/bg1.jpg
+# exec_always --no-startup-id feh --bg-fill ~/Pictures/Wal/bg1.jpg
 
 # Execute polybar on launch. Script kills current ones on i3 refresh, otherwise they duplicate
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh

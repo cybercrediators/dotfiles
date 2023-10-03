@@ -33,7 +33,7 @@ fi
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
-export NVM_LAZY_LOAD=true
+# export NVM_LAZY_LOAD=true
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -102,12 +102,18 @@ alias ssh="TERM=xterm ssh"
 alias be="bundle exec"
 
 alias ls='lsd'
+alias cat='bat'
+
+
+
 alias gfc='git commit -m "WIP: $(fortune)"'
 alias gfp='git commit -am "WIP: $(fortune)" && git push'
 alias ytdl='youtube-dl -f 22'
 alias ll='ls -Alh'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3'
 alias mastud='cd ~/Desktop/master_studium/SS_21'
+alias rstudio-bin='rstudio-bin --no-sandbox'
+alias wrk='cd ~/Desktop/work/'
 
 # remove this to use vim again!
 #alias vim='nvim'
@@ -134,4 +140,8 @@ export FZF_DEFAULT_OPS="--extended"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 eval "$(rbenv init -)"
-. /opt/asdf-vm/asdf.sh
+#. /opt/asdf-vm/asdf.sh
+
+
+# Load Angular CLI autocompletion.
+# source <(ng completion script)

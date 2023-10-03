@@ -133,6 +133,8 @@ nnoremap <C-Delete> :tabclose<CR>
 
 " Close buffer
 nnoremap <leader>q :bdelete<CR>
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>p :bprevious<CR>
 
 " Git settings
 hi clear SignColumn
@@ -207,6 +209,11 @@ set encoding=utf-8 nobomb
 
 " markdown preview
 nmap <C-m> <Plug>MarkdownPreviewToggle
+
+" Obsidian shortcuts
+nnoremap <Leader>or :ObsidianOpen<Enter>
+nnoremap <Leader>od :ObsidianToday<Enter>
+
 
 "" Telescope
 
@@ -304,6 +311,9 @@ lua << EOF
       new_notes_location = "current_dir"
     },
     finder = "telescope.nvim",
+    templates = {
+      subdir = "templates",
+    }
   }
 
 EOF
