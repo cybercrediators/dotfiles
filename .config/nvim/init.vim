@@ -107,12 +107,12 @@ set statusline+=%#warningmsg#
 set statusline+=%*
 
 " Nerdtree settings
+nnoremap <leader>t :NERDTreeFind<CR>
 nnoremap <C-g> :NERDTreeToggle<CR>
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 "autocmd BufWinEnter * silent NERDTreeMirror
 let NERDTreeShowHidden=1
-nmap <silent> <leader>t :NERDTreeToggle<CR>
 let g:nerdtree_tabs_open_on_console_startup = 0
 
 " Tagbartoggle
@@ -146,6 +146,8 @@ endfunction
 set statusline+=%{GitStatus()}
 
 " Tablemode settings
+let g:table_mode_disable_tableize_mappings = 1
+let g:table_mode_disable_mappings = 1
 nnoremap <C-w>t :TableModeToggle<CR>
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -208,7 +210,7 @@ let g:tmux_navigator_save_on_switch = 2
 set encoding=utf-8 nobomb
 
 " markdown preview
-nmap <C-m> <Plug>MarkdownPreviewToggle
+nmap <Leader>m <Plug>MarkdownPreviewToggle
 
 " Obsidian shortcuts
 nnoremap <Leader>or :ObsidianOpen<Enter>
@@ -255,7 +257,7 @@ lua << EOF
   
   -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
-  local servers = { "pylsp", "solargraph", "bashls", "angularls", "dockerls", "tsserver", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman", "cssls"}
+  local servers = { "pylsp", "solargraph", "bashls", "angularls", "dockerls", "ts_ls", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman", "cssls"}
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup { on_attach = on_attach }
   end
@@ -308,8 +310,8 @@ lua << EOF
     completion = {
       nvim_cmp = true,
       min_chars = 2,
-      new_notes_location = "current_dir"
     },
+    new_notes_location = "current_dir",
     finder = "telescope.nvim",
     templates = {
       subdir = "templates",
