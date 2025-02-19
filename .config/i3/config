@@ -7,6 +7,7 @@ exec_always --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id /usr/bin/blueman-applet
 exec --no-startup-id setxkbmap -layout us -variant altgr-intl
+# exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secret
 
 font pango:Overpass Regular 8
 exec "synclient TapButton1=1 TabButton2=3 TabButton3=2"
@@ -136,10 +137,10 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # Finds out, if available)
-bar {
-        status_command i3status
-        mode invisible
-}
+# bar {
+#         status_command i3status
+#         mode invisible
+# }
 
 new_window pixel 2
 
