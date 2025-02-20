@@ -51,3 +51,4 @@
   + `ln -s ~/.local/share/fonts ~/.fonts`
   + `xrdb ~/.Xdefaults`
   + check that you have the correct `locales` (e.g. `en_US.utf8`)
++ Install `python-pynvim` if neovim complains about "python3" compilation
