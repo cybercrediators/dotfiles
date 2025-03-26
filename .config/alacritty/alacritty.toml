@@ -35,4 +35,5 @@ WINIT_X11_SCALE_FACTOR = "1.0"
 vblank_mode = "1"
 
 [font]
+normal = { family = "Cascadia Code" }
 size = 10
