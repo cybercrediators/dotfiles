@@ -104,14 +104,10 @@ alias be="bundle exec"
 alias ls='lsd'
 alias cat='bat'
 
-
-
 alias gfc='git commit -m "WIP: $(fortune)"'
 alias gfp='git commit -am "WIP: $(fortune)" && git push'
-alias ytdl='youtube-dl -f 22'
 alias ll='ls -Alh'
-alias ytmp3='youtube-dl --extract-audio --audio-format mp3'
-alias mastud='cd ~/Desktop/master_studium/SS_21'
+alias ytmp3='yt-dlp -x --add-metadata --audio-quality 0 --audio-format mp3'
 alias rstudio-bin='rstudio-bin --no-sandbox'
 alias wrk='cd ~/Desktop/work/'
 
