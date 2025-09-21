@@ -31,10 +31,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'arcticicestudio/nord-vim'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'sts10/vim-pink-moon'
   Plug 'preservim/nerdtree'
   Plug 'preservim/tagbar'
-  Plug 'airblade/vim-gitgutter'
+  Plug 'sts10/vim-pink-moon'
   Plug 'tpope/vim-fugitive'
   Plug 'Raimondi/delimitMate'
   Plug 'christoomey/vim-tmux-navigator'
@@ -56,25 +55,24 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   "Plug 'junegunn/fzf'
   "Plug 'junegunn/fzf.vim'
   Plug 'mileszs/ack.vim'
-  Plug 'dense-analysis/ale'
+  "Plug 'dense-analysis/ale'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/playground'
-  Plug 'neovim/nvim-lspconfig'
-  "Plug 'hrsh7th/nvim-compe'
   Plug 'hrsh7th/nvim-cmp'
+  Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/cmp-nvim-lsp'
   Plug 'hrsh7th/cmp-nvim-lua'
   Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
   Plug 'hrsh7th/cmp-vsnip'                             
   Plug 'hrsh7th/cmp-path'                              
   Plug 'hrsh7th/cmp-buffer'                            
-  Plug 'hrsh7th/vim-vsnip'                             
+  Plug 'hrsh7th/vim-vsnip'                          
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
   Plug 'SirVer/ultisnips'
-  Plug 'quangnguyen30192/cmp-nvim-ultisnips'
+  "Plug 'quangnguyen30192/cmp-nvim-ultisnips'
   Plug 'honza/vim-snippets'
   "Plug 'norcalli/snippets.nvim'
   Plug 'hrsh7th/vim-vsnip-integ'
@@ -101,7 +99,7 @@ let g:airline_detect_paste=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='luna'
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#ale#enabled = 1
+"let g:airline#extensions#ale#enabled = 1
 
 set statusline+=%#warningmsg#
 set statusline+=%*
@@ -164,17 +162,17 @@ inoreabbrev <expr> __
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 " ALE Settings
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_text_changed = 'never'
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nnoremap <C-w>e :ALEToggle<CR>
-nnoremap <C-w>d :ALEFindReferences<CR>
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = "▲"
-let g:airline#extensions#ale#enabled = 1
-let g:ale_set_highlights = 1
-highlight ALEWarning ctermbg=DarkMagenta
+"let g:ale_lint_on_enter = 0
+"let g:ale_lint_on_text_changed = 'never'
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap)
+"nnoremap <C-w>e :ALEToggle<CR>
+"nnoremap <C-w>d :ALEFindReferences<CR>
+"let g:ale_sign_error = '✘'
+"let g:ale_sign_warning = "▲"
+"let g:airline#extensions#ale#enabled = 1
+"let g:ale_set_highlights = 1
+"highlight ALEWarning ctermbg=DarkMagenta
 
 " Vim Latex Settings
 let g:tex_flavor='latex'
@@ -220,11 +218,11 @@ nnoremap <Leader>od :ObsidianToday<Enter>
 "" Telescope
 
 lua << EOF
-  local nvim_lsp = require('lspconfig')
+  -- local nvim_lsp = require('lspconfig')
   
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
-  local on_attach = function(client, bufnr)
+  local global_on_attach = function(client, bufnr)
     print("LSP started")
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -254,23 +252,21 @@ lua << EOF
     buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   
   end
+
+  vim.diagnostic.config({ 
+  virtual_lines = { current_line = true }
+  })
   
-  -- Use a loop to conveniently call 'setup' on multiple servers and
   -- map buffer local keybindings when the language server attaches
-  local servers = { "pylsp", "solargraph", "bashls", "angularls", "dockerls", "ts_ls", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman", "cssls"}
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup { on_attach = on_attach }
-  end
-
-  require'lspconfig'.java_language_server.setup {
+  vim.lsp.config("java_language_server", {
     cmd = { "java-language-server" }
-  }
+  })
 
-  require'lspconfig'.vimls.setup {
+  vim.lsp.config("vimls", {
     filetypes = { "vim" }
-  }
+  })
 
-  require'lspconfig'.ccls.setup {
+  vim.lsp.config("ccls", {
     init_options = {
       compilationDatabaseDirectory = "build";
       index = {
@@ -280,10 +276,9 @@ lua << EOF
         excludeArgs = { "-frounding-math"} ;
       };
     }
-  }
+  })
 
-  require'lspconfig'.rust_analyzer.setup {
-      on_attach=on_attach,
+  vim.lsp.config("rust_analyzer", {
       settings = {
           ["rust-analyzer"] = {
               assist = {
@@ -298,9 +293,9 @@ lua << EOF
               },
           }
       }
-  }
+  })
 
-  require'obsidian'.setup {
+  vim.lsp.config("obsidian", {
     dir = "~/Documents/smallbrain",
     daily_notes = {
       folder = "Daily/",
@@ -316,8 +311,22 @@ lua << EOF
     templates = {
       subdir = "templates",
     }
-  }
+  })
 
+  local servers = { "pyright", "solargraph", "bashls", "angularls", "dockerls", "ts_ls", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman", "cssls", "vimls", "java_language_server", "ccls", "obsidian", "rust_analyzer" }
+
+  for _, name in ipairs(servers) do
+    local ext_on_attach = (vim.lsp.config[name] or {}).on_attach
+    vim.lsp.config(name, {
+      on_attach = function(...)
+        if ext_on_attach then ext_on_attach(...) end
+        global_on_attach(...)
+      end
+    })
+    vim.lsp.enable(name)
+  end
+
+  -- vim.lsp.enable({ "pyright", "solargraph", "bashls", "angularls", "dockerls", "ts_ls", "jsonls", "scry", "texlab", "gopls", "yamlls", "marksman", "cssls", "vimls", "java_language_server", "ccls", "obsidian", "rust_analyzer" })
 EOF
 
 lua << EOF
@@ -337,6 +346,7 @@ cmp.setup({
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
+
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -390,76 +400,6 @@ cmp.setup({
   -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
   --   capabilities = capabilities
   -- }
-
---require'compe'.setup {
---  enabled = true;
---  autocomplete = true;
---  debug = false;
---  min_length = 1;
---  preselect = 'enable';
---  throttle_time = 80;
---  source_timeout = 200;
---  incomplete_delay = 400;
---  max_abbr_width = 100;
---  max_kind_width = 100;
---  max_menu_width = 100;
---  documentation = true;
---
---  source = {
---    path = true;
---    buffer = true;
---    calc = true;
---    nvim_lsp = true;
---    nvim_lua = true;
---    spell = true;
---    treesitter = true;
---    ultisnips = true;
---  };
---}
---
--- local t = function(str)
---   return vim.api.nvim_replace_termcodes(str, true, true, true)
--- end
--- 
--- local check_back_space = function()
---     local col = vim.fn.col('.') - 1
---     if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
---         return true
---     else
---         return false
---     end
--- end
---
--- Use (s-)tab to:
--- move to prev/next item in completion menuone
--- jump to prev/next snippet's placeholder
--- _G.tab_complete = function()
---   if vim.fn.pumvisible() == 1 then
---     return t "<C-n>"
---   elseif vim.fn.call("vsnip#available", {1}) == 1 then
---     return t "<Plug>(vsnip-expand-or-jump)"
---   elseif check_back_space() then
---     return t "<Tab>"
---   else
---     -- return vim.fn['cmp#complete']()
---     return cmp.complete()
---   end
--- end
--- _G.s_tab_complete = function()
---   if vim.fn.pumvisible() == 1 then
---     return t "<C-p>"
---   elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
---     return t "<Plug>(vsnip-jump-prev)"
---   else
---     -- If <S-Tab> is not working in your terminal, change it to <C-h>
---     return t "<S-Tab>"
---   end
--- end
--- 
--- vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
 EOF
 
 " Telescope settings
