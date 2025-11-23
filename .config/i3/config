@@ -24,7 +24,9 @@ bindsym $mod+Shift+q kill
 bindsym $alt+F4      kill
 
 # Open dmenu 
-bindsym $mod+d exec dmenu_run -fn 'Overpass Mono:pixelsize=15' -l 5 -nf '#707880' -sf '#cc6666' -nb '#1d1f21' -sb '#1d1f21'
+#bindsym $mod+d exec dmenu_run -fn 'Inter:pixelsize=15' -l 5 -nf '#707880' -sf '#cc6666' -nb '#1d1f21' -sb '#1d1f21'
+bindsym $mod+d exec dmenu_run -fn 'Inter:pixelsize=15' -l 5 -nf '#ffffff' -sf '#ff1744' -nb '#000000' -sb '#000000'
+
 
 # Change focus
 bindsym $mod+h focus left
@@ -142,7 +144,7 @@ bindsym $mod+r mode "resize"
 #         mode invisible
 # }
 
-new_window pixel 2
+default_border pixel 2
 
 hide_edge_borders vertical
 
@@ -222,14 +224,14 @@ mode "$mode_system" {
 bindsym $mod+$alt+l mode "$mode_system"
 
 
-set $mode_display Ext Screen (h) HDMI ON, (y) HDMI OFF
-mode "$mode_display" {
-    bindsym h exec --no-startup-id xrandr --output HDMI1 --auto --right-of LVDS1, mode "default"
-    bindsym y exec --no-startup-id xrandr --output HDMI1 --auto --off, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
+#set $mode_display Ext Screen (h) HDMI ON, (y) HDMI OFF
+#mode "$mode_display" {
+#    bindsym h exec --no-startup-id xrandr --output HDMI1 --auto --right-of LVDS1, mode "default"
+#    bindsym y exec --no-startup-id xrandr --output HDMI1 --auto --off, mode "default"
+#
+#    # back to normal: Enter or Escape
+#    bindsym Return mode "default"
+#    bindsym Escape mode "default"
+#}
 # Declare here the shortcut to bring the display selection menu
-bindsym $mod+x mode "$mode_display"
+#bindsym $mod+x mode "$mode_display"
