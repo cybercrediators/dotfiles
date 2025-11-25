@@ -57,7 +57,8 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'mileszs/ack.vim'
   "Plug 'dense-analysis/ale'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  Plug 'nvim-treesitter/playground'
+  "Plug 'nvim-treesitter/playground'
+  "now integrated into neovim
   Plug 'hrsh7th/nvim-cmp'
   Plug 'neovim/nvim-lspconfig'
   Plug 'hrsh7th/cmp-nvim-lsp'
@@ -79,12 +80,20 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'puremourning/vimspector'
 
   Plug 'epwalsh/obsidian.nvim'
+  "Plug 'github/copilot.vim'
+  "Plug 'akinsho/bufferline.nvim'
+
 
 call plug#end()
 
 " Apply the colorscheme
 if (has("termguicolors"))
   set termguicolors
+"lua << EOF
+"  -- Enable bufferline
+"  require("bufferline").setup{}
+"EOF
+  
 endif
 colorscheme pink-moon
 set background=dark
@@ -219,7 +228,7 @@ nnoremap <Leader>od :ObsidianToday<Enter>
 
 lua << EOF
   -- local nvim_lsp = require('lspconfig')
-  
+
   -- Use an on_attach function to only map the following keys
   -- after the language server attaches to the current buffer
   local global_on_attach = function(client, bufnr)

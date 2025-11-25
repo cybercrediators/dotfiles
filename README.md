@@ -40,6 +40,7 @@
 + set the default shell to zsh: ```chsh -s /bin/zsh``` 
 + logout and login to see changes
 + no symbol fix: install the `fonts-powerline` and `dejavu` fonts
+  + fonts used: `Cascadia Code` + `Inter`
 + fix empty bottom line in termite: adjust the `height` in the polybar config and add `padding: 0px;` to the `~/.config/gtk-3.0/gtk.css` check at which combination the line is invisible
 + For the old youcompleteme: check `vim --version` if you compiled vim with python or not (needs python3!)
 + To use the system-wide clipboard you have to compile your vim with `clipboard` and `xterm_clipboard` (`vim --version | grep clipboard`)
@@ -52,3 +53,8 @@
   + `xrdb ~/.Xdefaults`
   + check that you have the correct `locales` (e.g. `en_US.utf8`)
 + Install `python-pynvim` if neovim complains about "python3" compilation
+
+# new neovim config
+- more modular config + lua first instead of a random `.vim` file
+- plugin manager: `lazy.nvim`
+- lsp manager: `mason.nvim` + `mason.lspconfig`

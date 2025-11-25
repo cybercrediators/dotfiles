@@ -1,0 +1,26 @@
+  " language plugins -> still necessary??
+  Plug 'kchmck/vim-coffee-script'
+  Plug 'pangloss/vim-javascript'
+  Plug 'vim-crystal/vim-crystal'
+  Plug 'tpope/vim-rails'
+  Plug 'vim-ruby/vim-ruby'
+  Plug 'thoughtbot/vim-rspec'
+  Plug 'slim-template/vim-slim'
+  Plug 'tpope/vim-bundler'
+  Plug 'xavierd/clang_complete'
+  Plug 'rust-lang/rust.vim'
+  Plug 'leafgarland/typescript-vim'
+
+  Plug 'preservim/tagbar' -> aerial.nvim
+
+  Plug 'puremourning/vimspector' -> neovim dap / debugger
+
+  "Plug 'github/copilot.vim'
+
+
+" Tagbartoggle
+nmap <F8> :TagbarToggle<CR>
+nmap <silent> <leader>b :TagbarToggle<CR>
+
+lua << EOF
+EOF

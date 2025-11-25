@@ -1,0 +1,6 @@
+require("config.lazy")
+require("config.base_settings")
+require("config.tabnavigation")
+require("config.lsp")
+require("config.autocomplete")
+require("config.misc")
