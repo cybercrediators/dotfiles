@@ -13,7 +13,7 @@ vim.opt.shiftwidth = 2
 vim.opt.laststatus = 2
 
 vim.opt.mouse = a
-vim.opt.clipboard:append('unnamedplus')
+vim.opt.clipboard = 'unnamedplus'
 
 vim.opt.termguicolors = true
 vim.opt.background = 'dark'

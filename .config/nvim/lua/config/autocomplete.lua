@@ -7,7 +7,7 @@ cmp.setup({
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
       vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      --vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
     end,
   },
   window = {

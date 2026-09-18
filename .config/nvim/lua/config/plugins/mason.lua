@@ -18,6 +18,8 @@ return {
         "vimls",
         "clangd",
         "rust_analyzer",
+        "terraformls",
+        "ansiblels"
       },
     },
     dependencies = {

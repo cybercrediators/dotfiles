@@ -1,9 +1,8 @@
 return {
   "nvim-treesitter/nvim-treesitter",
-  branch = 'master',
   lazy = false,
   build = ":TSUpdate",
-  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+  ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline", "terraform", "hcl" },
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = { "markdown" },
